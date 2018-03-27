@@ -1,4 +1,3 @@
-
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -21,8 +20,13 @@ public:
     }
 
     //Destructor
-    ~Member() {
+     ~Member() {
         --counter;
+        for (int i = 0; i <memberStore.size() ; ++i) {
+            unfollow(reinterpret_cast<Member &>(*memberStore[i]));
+            reinterpret_cast<Member &>(*memberStore[i]).unfollow(*this);
+
+        }
     }
 
     //Follow someone
@@ -34,10 +38,16 @@ public:
         }
         //If you don't follow -
         if (flag){
+
             //Add him to your following list
             UfollowStore.push_back(x.id);
             //Add you to his followers list
             x.followUStore.push_back(id);
+            //Add to member you follow
+            int *temp= reinterpret_cast<int *>(&x);
+            int *temp2= reinterpret_cast<int *>(this);
+            memberStore.push_back(temp);
+            x.memberStore.push_back(temp2);
         }
 
 
@@ -82,11 +92,21 @@ public:
         return counter;
     }
 
+   // print the class
+   /*  ostream& operator<< (ostream &out) {
+       out << 'ID: ' << id << endl;
+       out << 'Number of followers: ' << numFollowers() << endl;
+       out << 'Number of following: ' << numFollowing() << endl;
+       // and so on...
+       return out;
+   }*/
+
 private:
     int  id;
     static int counter, idCounter;
     //Vectors for saving ids
     vector <int> UfollowStore, followUStore;
+    vector <int*> memberStore;
 
 };
 
