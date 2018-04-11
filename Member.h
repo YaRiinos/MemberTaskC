@@ -32,6 +32,8 @@ public:
     //Follow someone
     void follow(Member &x){
         bool flag=true;
+         if (this == &x)
+            flag= false;
         //Check if you not following this person already
         for (int i : UfollowStore) {
             if (i ==x.id) flag= false;
