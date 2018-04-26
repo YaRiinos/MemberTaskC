@@ -11,12 +11,14 @@ CircularInt::CircularInt(int newStart, int newEnd) {
     start=newStart;
     end=newEnd;
     currentInt=newStart;
+    range=end-start+1;
 }
 
 CircularInt::CircularInt(CircularInt &X) {
     start=X.start;
     end=X.end;
     currentInt=X.start;
+    range=X.range;
 }
 
 //Destructor
@@ -53,25 +55,25 @@ CircularInt& CircularInt::operator =( int x) {
 }
 
 CircularInt& CircularInt::operator +=( int x) {
-    this->currentInt=(this->currentInt+x)%this->end;
+    this->currentInt=(this->currentInt+x)%this->range;
     return *this;
 }
 
 CircularInt& CircularInt::operator -=( int x) {
-    this->currentInt=(this->currentInt-x)%this->end;
+    this->currentInt=(this->currentInt-x)%this->range;
     if(this->currentInt<0)
         this->currentInt+=12;
     return *this;
 }
 
 CircularInt& CircularInt::operator *=( int x) {
-    this->currentInt=(this->currentInt*x)%this->end;
+    this->currentInt=(this->currentInt*x)%this->range;
     return *this;
 }
 
 CircularInt& CircularInt::operator /=( int x) {
     if(this->currentInt%x==0){
-        this->currentInt=(this->currentInt/x)%this->end;
+        this->currentInt=(this->currentInt/x)%this->range;
         return *this;
     }
     else
@@ -80,7 +82,7 @@ CircularInt& CircularInt::operator /=( int x) {
 }
 
 CircularInt& CircularInt::operator %=( int x) {
-    this->currentInt=(this->currentInt%x)%this->end;
+    this->currentInt=(this->currentInt%x)%this->range;
     return *this;
 }
 
@@ -102,7 +104,7 @@ CircularInt& CircularInt::operator++(int) {
 
 
 int CircularInt:: operator+( CircularInt& x) {
-    return (this->currentInt+x.currentInt)%this->end;
+    return (this->currentInt+x.currentInt)%this->range;
 }
 
 
@@ -118,7 +120,7 @@ int CircularInt:: operator-() {
 
 
 int operator-(int y, CircularInt&x) {
-    int ans=(y-x.currentInt)%x.end;
+    int ans=(y-x.currentInt)%x.range;
     if(ans<=0)
         ans+=x.end;
     return ans;
@@ -126,7 +128,7 @@ int operator-(int y, CircularInt&x) {
 
 int CircularInt:: operator /( int x){
     if(this->currentInt%x==0){
-        int temp=(this->currentInt/x)%this->end;
+        int temp=(this->currentInt/x)%this->range;
         return temp;
     }
     else{
