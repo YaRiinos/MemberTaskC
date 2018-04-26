@@ -40,6 +40,6 @@ public:
 
 
 private:
-    int start, end, currentInt;
+    int start, end, currentInt, range;
 
 };
