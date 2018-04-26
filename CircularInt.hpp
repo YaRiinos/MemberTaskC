@@ -15,6 +15,8 @@ public:
     //Destructor
     ~CircularInt();
 
+    int range(int x);
+
     friend ostream& operator<<(ostream& output, const CircularInt& H);
 
     bool operator >(const CircularInt& X) const;
@@ -40,6 +42,6 @@ public:
 
 
 private:
-    int start, end, currentInt, range;
+    int start, end, currentInt;
 
 };
