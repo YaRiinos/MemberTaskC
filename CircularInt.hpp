@@ -15,42 +15,31 @@ public:
     //Destructor
     ~CircularInt();
 
-    friend istream& operator>> (istream& is,CircularInt& ci);
-    friend ostream& operator<< (ostream& os, CircularInt const& ci);
+    friend ostream& operator<<(ostream& output, const CircularInt& H);
 
     bool operator >(const CircularInt& X) const;
     bool operator >=(const CircularInt& X) const;
     bool operator <(const CircularInt& X) const;
     bool operator <=(const CircularInt& X) const;
 
-
-    friend CircularInt& operator +=(CircularInt& X, int x);
-    friend CircularInt& operator -=(CircularInt& X, int x);
+    CircularInt& operator =( int x);
+    CircularInt& operator +=( int x);
+    CircularInt& operator -=( int x);
     CircularInt& operator *=( int x);
     CircularInt& operator /=( int x);
-    friend CircularInt& operator %=(CircularInt& X, int x);
+    CircularInt& operator %=( int x);
 
     CircularInt& operator ++();
     CircularInt& operator ++( int);
-
-    int operator /( int x);
-
-    friend CircularInt& operator+ ( CircularInt& other, int num );
-    friend CircularInt& operator+ ( int num, CircularInt& other );
-    friend CircularInt& operator + (CircularInt& a, CircularInt& b);
-
-    friend CircularInt& operator-(int y, CircularInt&x);
-    friend CircularInt& operator - (CircularInt& other, int num );
-    friend CircularInt& operator- ( CircularInt& a, CircularInt& b );
+    int operator+( CircularInt& x);
     int operator-();
+    int operator /( int x);
+    int operator +( int x);
 
-    friend CircularInt& operator* ( CircularInt& other, int num);
-    friend CircularInt& operator* ( CircularInt& a,CircularInt& b );
-    friend CircularInt& operator* ( int num, CircularInt& other);
-
-    CircularInt rangeBetween (CircularInt& other, int temp);
+    friend int operator-(int y, CircularInt&x);
 
 
+private:
     int start, end, currentInt;
 
 };
