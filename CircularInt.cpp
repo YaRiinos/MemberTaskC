@@ -11,18 +11,33 @@ CircularInt::CircularInt(int newStart, int newEnd) {
     start=newStart;
     end=newEnd;
     currentInt=newStart;
-    range=end-start+1;
+
 }
 
 CircularInt::CircularInt(CircularInt &X) {
     start=X.start;
     end=X.end;
     currentInt=X.start;
-    range=X.range;
+
 }
 
 //Destructor
 CircularInt::~CircularInt() {
+
+}
+
+int CircularInt:: range (int temp){
+
+    int numVal = this->end - this->start + 1;
+    if(this->currentInt > this->end){
+        while(this->currentInt > this->end)
+            this->currentInt -= numVal;
+    }
+    else if(this->currentInt < this->start){
+        while(this->currentInt < this->start)
+            this->currentInt += numVal;
+    }
+    return this->currentInt;
 
 }
 
@@ -55,25 +70,27 @@ CircularInt& CircularInt::operator =( int x) {
 }
 
 CircularInt& CircularInt::operator +=( int x) {
-    this->currentInt=(this->currentInt+x)%this->range;
+    this->currentInt=this->currentInt+x;
+    range(this->currentInt);
     return *this;
 }
 
 CircularInt& CircularInt::operator -=( int x) {
-    this->currentInt=(this->currentInt-x)%this->range;
-    if(this->currentInt<0)
-        this->currentInt+=12;
+    this->currentInt=(this->currentInt-x);
+    range(this->currentInt);
     return *this;
 }
 
 CircularInt& CircularInt::operator *=( int x) {
-    this->currentInt=(this->currentInt*x)%this->range;
+    this->currentInt=(this->currentInt*x);
+    range(this->currentInt);
     return *this;
 }
 
 CircularInt& CircularInt::operator /=( int x) {
     if(this->currentInt%x==0){
-        this->currentInt=(this->currentInt/x)%this->range;
+        this->currentInt=(this->currentInt/x);
+        range(this->currentInt);
         return *this;
     }
     else
@@ -82,7 +99,8 @@ CircularInt& CircularInt::operator /=( int x) {
 }
 
 CircularInt& CircularInt::operator %=( int x) {
-    this->currentInt=(this->currentInt%x)%this->range;
+    this->currentInt=(this->currentInt%x);
+    range(this->currentInt);
     return *this;
 }
 
@@ -104,7 +122,7 @@ CircularInt& CircularInt::operator++(int) {
 
 
 int CircularInt:: operator+( CircularInt& x) {
-    return (this->currentInt+x.currentInt)%this->range;
+    return range(this->currentInt+x.currentInt);
 }
 
 
@@ -120,7 +138,7 @@ int CircularInt:: operator-() {
 
 
 int operator-(int y, CircularInt&x) {
-    int ans=(y-x.currentInt)%x.range;
+    int ans=(y-x.currentInt)%x.end;
     if(ans<=0)
         ans+=x.end;
     return ans;
@@ -128,7 +146,8 @@ int operator-(int y, CircularInt&x) {
 
 int CircularInt:: operator /( int x){
     if(this->currentInt%x==0){
-        int temp=(this->currentInt/x)%this->range;
+        int temp=(this->currentInt/x);
+        range(temp);
         return temp;
     }
     else{
