@@ -24,19 +24,78 @@ public:
     bool operator <(const CircularInt& X) const;
     bool operator <=(const CircularInt& X) const;
 
-    CircularInt& operator =( int x);
-    CircularInt& operator +=( int x);
-    CircularInt& operator -=( int x);
-    CircularInt& operator *=( int x);
-    CircularInt& operator /=( int x);
-    CircularInt& operator %=( int x);
+
+    friend bool operator== (CircularInt const& X, CircularInt const& Y);
+    friend bool operator== (CircularInt const& X, int const& num);
+    friend bool operator== (int const& num, CircularInt const& X);
+
+    friend bool operator!= (CircularInt const& X, CircularInt const& Y);
+    friend bool operator!= (CircularInt const& X, int const& num);
+    friend bool operator!= (int const& num, CircularInt const& X);
+
+    CircularInt& operator+  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator+  (CircularInt X, int const& num);
+    CircularInt& operator+  (int const& num, CircularInt X);
+
+    CircularInt& operator-  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator-  (CircularInt X, int const& num);
+    CircularInt& operator-  (int const& num, CircularInt X);
+
+    CircularInt& operator*  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator*  (CircularInt X, int const& num);
+    CircularInt& operator*  (int const& num, CircularInt X);
+
+    CircularInt& operator/  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator/  (CircularInt X, int const& num);
+    CircularInt& operator/  (int const& num, CircularInt X);
+
+    CircularInt& operator%  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator%  (CircularInt X, int const& num);
+    CircularInt& operator%  (int const& num, CircularInt X);
+
+    CircularInt& operator^  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator^  (CircularInt X, int const& num);
+    CircularInt& operator^  (int const& num, CircularInt X);
+
+    CircularInt& operator|  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator|  (CircularInt X, int const& num);
+    CircularInt& operator|  (int const& num, CircularInt X);
+
+    CircularInt& operator&  (CircularInt X, CircularInt const& Y);
+    CircularInt& operator&  (CircularInt X, int const& num);
+    CircularInt& operator&  (int const& num, CircularInt X);
+
+    CircularInt& operator+=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator+=  (CircularInt& X, int const& num);
+
+    CircularInt& operator-=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator-=  (CircularInt& X, int const& num);
+
+    CircularInt& operator*=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator*=  (CircularInt& X, int const& num);
+
+    CircularInt& operator/=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator/=  (CircularInt& X, int const& num);
+
+    CircularInt& operator%=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator%=  (CircularInt& X, int const& num);
+
+    CircularInt& operator^=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator^=  (CircularInt& X, int const& num);
+
+    CircularInt& operator|=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator|=  (CircularInt& X, int const& num);
+
+    CircularInt& operator&=  (CircularInt& X, CircularInt const& Y);
+    CircularInt& operator&=  (CircularInt& X, int const& num);
 
     CircularInt& operator ++();
     CircularInt& operator ++( int);
-    int operator+( CircularInt& x);
+
+
     int operator-();
     int operator /( int x);
-    int operator +( int x);
+
 
     friend int operator-(int y, CircularInt&x);
 
