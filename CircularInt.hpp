@@ -1,3 +1,8 @@
+#ifndef CIRCULARINT_HPP
+#define CIRCULARINT_HPP
+
+#pragma once
+
 #include <iostream>
 using namespace std;
 
@@ -107,26 +112,18 @@ public:
 
     int start, end, currentInt;
 
-    CircularInt (int newStart, int newEnd) : start(newStart), end(newEnd){
-        currentInt = newStart;
-        if(start > end)
-            swap(*this);
 
-    }
-
-    CircularInt (CircularInt& x) : start(x.start), end(x.end){
-        currentInt = x.start;
-
-    }
-
-    void swap(CircularInt& x){
+    CircularInt (int first, int last) : start(first), end(last){
         int temp;
-            temp = x.end;
-            x.end = x.start;
-            x.start = temp;
+        currentInt = start;
+        if(start > end){
+            temp = end;
+            end = start;
+            start = temp;
+        }
     }
 
-    int inRange(int x);
+    CircularInt inRange(CircularInt& cir);
     void operator=(CircularInt X);
     void operator= (int n);
     CircularInt& operator++();
@@ -135,3 +132,5 @@ public:
     CircularInt	operator--(int);
 
 };
+
+#endif
