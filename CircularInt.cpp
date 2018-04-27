@@ -21,19 +21,6 @@ CircularInt inRange(CircularInt& x){
     return x;
 }
 
-int CircularInt:: inRange(int x){
-    int space = end - start + 1;
-    if(currentInt > end){
-        while(currentInt > end)
-            currentInt -= space;
-    }
-    else if(currentInt < start){
-        while(currentInt < start)
-            currentInt += space;
-    }
-    return x;
-}
-
 
 ostream& operator<< (ostream& os, const CircularInt& x){
     return os << x.currentInt;
@@ -48,18 +35,34 @@ istream& operator>> (istream& is, CircularInt& x){
 // =
 void CircularInt::operator=(int n){
     currentInt = n;
-    inRange(currentInt);
+    int numVal = end - start + 1;
+    if(currentInt > end){
+        while(currentInt > end)
+            currentInt -= numVal;
+    }
+    else if(currentInt < start){
+        while(currentInt < start)
+            currentInt += numVal;
+    }
 }
 
-void CircularInt::operator=(CircularInt x){
-    currentInt = x.currentInt;
-    inRange(currentInt);
+void CircularInt::operator=(CircularInt cir){
+    currentInt = cir.currentInt;
+    int numVal = end - start + 1;
+    if(currentInt > end){
+        while(currentInt > end)
+            currentInt -= numVal;
+    }
+    else if(currentInt < start){
+        while(currentInt < start)
+            currentInt += numVal;
+    }
 }
 
-// ++
 CircularInt& CircularInt :: operator++(){
-   currentInt=currentInt+1;
-    inRange(currentInt);
+    if(currentInt+1 <= end)
+        currentInt += 1;
+    else currentInt = start;
     return *this;
 }
 
@@ -69,10 +72,10 @@ CircularInt CircularInt :: operator++(int){
     return ans;
 }
 
-// --
 CircularInt& CircularInt :: operator--(){
-    currentInt=currentInt-1;
-    inRange(currentInt);
+    if(currentInt-1 >= start)
+        currentInt -= 1;
+    else currentInt = end;
     return *this;
 }
 
