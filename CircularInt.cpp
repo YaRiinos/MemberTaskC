@@ -1,429 +1,78 @@
 #include <string>
-#include <sstream>
+#include <iostream>
+#include <math.h>
 
 
 #include "CircularInt.hpp"
 
+using namespace std;
 
-//Constructor
-CircularInt::CircularInt(int newStart, int newEnd) {
-    start=newStart;
-    end=newEnd;
-    currentInt =newStart;
 
-}
-
-CircularInt::CircularInt(CircularInt &X) {
-    start=X.start;
-    end=X.end;
-    currentInt =X.start;
-
-}
-
-//Destructor
-CircularInt::~CircularInt() = default;
-
-CircularInt&  range (CircularInt& X){
-
-    int numVal = X.end - X.start + 1;
-    if(X.currentInt > X.end){
-        while(X.currentInt > X.end)
-            X.currentInt -= numVal;
+CircularInt inRange(CircularInt& x){
+    int space = x.end - x.start + 1;
+    if(x.currentInt > x.end){
+        while(x.currentInt > x.end)
+            x.currentInt -= space;
     }
-    else if(X.currentInt < X.start){
-        while(X.currentInt < X.start)
-            X.currentInt += numVal;
+    else if(x.currentInt < x.start){
+        while(x.currentInt < x.start)
+            x.currentInt += space;
     }
-    return X;
-
+    return x;
 }
 
-ostream& operator<<(ostream& output, const CircularInt& X) {
-    output << X.currentInt;
-    return output;
-}
-
-
-//==
-bool operator== (CircularInt const& X, CircularInt const& Y){
-    return  ((X.start == Y.start)&&(X.end == Y.end)&&(X.currentInt == Y.currentInt));
-}
-
-bool operator== (int const& num, CircularInt const& X){
-    return (num == X.currentInt);
-}
-
-bool operator== (CircularInt const& X, int const& num){
-    return  X.currentInt == num;
-}
-
-// !=
-bool operator!= (CircularInt const& X, CircularInt const& Y){
-    return ((X.start != Y.start)||
-            (X.end != Y.end)||(X.currentInt != Y.currentInt));
-}
-bool operator!= (CircularInt const& X, int const& num){
-    return (X.currentInt != num);
-}
-
-
-bool operator!= (int const& num, CircularInt const& X){
-    return (num != X.currentInt);
-}
-
-
-
-
-bool CircularInt::operator >(const CircularInt &X) const {
-    return currentInt > X.currentInt;
-}
-
-bool CircularInt::operator >=(const CircularInt &X) const {
-    return currentInt >= X.currentInt;
-}
-
-
-bool CircularInt::operator <(const CircularInt &X) const {
-    return currentInt < X.currentInt;
-}
-
-bool CircularInt::operator <=(const CircularInt &X) const {
-    return currentInt <= X.currentInt;
-}
-
-
-
-CircularInt operator+ (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    temp.currentInt += Y.currentInt;
-    return range(temp);
-}
-
-CircularInt operator+ (CircularInt X, int const& num){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt + num;
-    return range(temp);
-}
-
-CircularInt operator+ (int const& num, CircularInt X){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt + num;
-    return range(temp);
-}
-
-CircularInt operator- (CircularInt X, int const& num){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt - num;
-    return range(temp);
-
-}
-
-CircularInt operator- (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt - Y.currentInt;
-    return range(temp);
-
-}
-
-
-CircularInt operator- (int const& num, CircularInt X){
-    CircularInt temp (X);
-    temp.currentInt = num - temp.currentInt;
-    return range(temp);
-
-}
-
-CircularInt operator* (CircularInt X, int const& num){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt * num;
-    return range(temp);
-}
-
-CircularInt operator* (int const& num, CircularInt X){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt * num;
-    return range(temp);
-}
-
-CircularInt operator* (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt * Y.currentInt;
-    return range(temp);
-}
-
-
-CircularInt operator/ (CircularInt X, int const& num){
-    CircularInt temp (X);
-    CircularInt temp2 (X);
-    CircularInt temp3 (X);
-    int c = 0;
-    for(int i = X.start; i <= X.end; i++){
-        temp.currentInt = i;
-        if(c > 0) break;
-        else{
-            if((temp*num) == X){
-                temp2.currentInt = temp.currentInt;
-                c++;
-            }
-        }
+int CircularInt:: inRange(int x){
+    int space = end - start + 1;
+    if(currentInt > end){
+        while(currentInt > end)
+            currentInt -= space;
     }
-    if(c == 0){
-        throw invalid_argument("THERE IS NO SUCH NUMBER!");
+    else if(currentInt < start){
+        while(currentInt < start)
+            currentInt += space;
     }
-    temp3.currentInt = temp2.currentInt;
-    return temp3;
+    return x;
 }
 
 
-CircularInt operator/ (int const& num, CircularInt X){
-    CircularInt temp (X);
-    CircularInt temp2 (X);
-    CircularInt temp3 (X);
-    int c = 0;
-    for(int i = X.start; i <= X.end; i++){
-        temp.currentInt = i;
-        if(c > 0) break;
-        else if(temp * X == num){
-            temp2.currentInt = temp.currentInt;
-            c++;
-        }
-    }
-    if(c == 0){
-        throw invalid_argument("THERE IS NO SUCH NUMBER!");
-    }
-    temp3.currentInt = temp2.currentInt;
-    return temp3;
+ostream& operator<< (ostream& os, const CircularInt& x){
+    return os << x.currentInt;
 }
 
-
-
-CircularInt operator/ (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    CircularInt temp2 (X);
-    int c = 0;
-    for(int i = X.start; i <= X.end; i++){
-        temp.currentInt = i;
-        if(c > 0) break;
-        else{
-            if((temp*Y) == X){
-                temp2.currentInt = temp.currentInt;
-                c++;
-            }
-        }
-    }
-    if(c == 0){
-        throw invalid_argument("THERE IS NO SUCH NUMBER!");
-    }
-    return temp2;
-
+istream& operator>> (istream& is, CircularInt& x){
+    char sign;
+    is >> x.start >> sign >> x.end;
+    return is;
 }
 
-//%
-CircularInt operator% (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt % Y.currentInt;
-    return range(temp);
+// =
+void CircularInt::operator=(int n){
+    currentInt = n;
+    inRange(currentInt);
 }
 
-CircularInt operator% (CircularInt X, int const& num){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt % num;
-    return range(temp);
+void CircularInt::operator=(CircularInt x){
+    currentInt = x.currentInt;
+    inRange(currentInt);
 }
 
-CircularInt operator% (int const& num, CircularInt X){
-    CircularInt temp (X);
-    temp.currentInt = num % temp.currentInt;
-    return range(temp);
-}
-
-//^
-CircularInt operator^ (CircularInt X, CircularInt const& Y){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt ^ Y.currentInt;
-    return range(temp);
-}
-
-
-CircularInt operator^ (CircularInt X, int const& num){
-    CircularInt temp (X);
-    temp.currentInt = temp.currentInt ^ num;
-    return range(temp);
-}
-
-CircularInt operator^ (int const& num, CircularInt X) {
-    CircularInt temp(X);
-    temp.currentInt = num ^ temp.currentInt;
-    return range(temp);
-
-}
-
-    CircularInt operator| (CircularInt X, CircularInt const& Y){
-        CircularInt temp (X);
-        temp.currentInt = temp.currentInt | Y.currentInt;
-        return range(temp);
-    }
-
-    CircularInt operator| (CircularInt X, int const& num){
-        CircularInt temp (X);
-        temp.currentInt = temp.currentInt | num;
-        return range(temp);
-    }
-
-    CircularInt operator| (int const& num, CircularInt X){
-        CircularInt temp (X);
-        temp.currentInt = num | temp.currentInt;
-        return range(temp);
-    }
-
-//&
-    CircularInt operator& (CircularInt X, CircularInt const& Y){
-        CircularInt temp (X);
-        temp.currentInt = temp.currentInt & Y.currentInt;
-        return range(temp);
-    }
-
-    CircularInt operator& (CircularInt X, int const& num){
-        CircularInt temp (X);
-        temp.currentInt = temp.currentInt & num;
-        return range(temp);
-    }
-
-    CircularInt operator& (int const& num, CircularInt X){
-        CircularInt temp (X);
-        temp.currentInt = num & temp.currentInt;
-        return range(temp);
-    }
-
-
-    CircularInt operator+= (CircularInt& X, CircularInt const& Y){
-        X.currentInt += Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator+= (CircularInt& X, int const& num){
-        X.currentInt += num;
-        return range(X);
-    }
-
-    CircularInt operator-= (CircularInt& X, CircularInt const& Y){
-        X.currentInt -= Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator-= (CircularInt& X, int const& num){
-        X.currentInt -= num;
-        return range(X);
-    }
-
-    CircularInt operator*= (CircularInt& X, CircularInt const& Y){
-        X.currentInt *= Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator*= (CircularInt& X, int const& num){
-        X.currentInt *= num;
-        return range(X);
-    }
-
-    CircularInt operator/= (CircularInt& X, CircularInt const& Y){
-        CircularInt temp {X.start, X.end};
-        int c = 0;
-        for(int i = X.start; i <= X.end; i++){
-            temp.currentInt = i;
-            if(c > 0) break;
-            else{
-                if((temp*Y) == X){
-                    X.currentInt = temp.currentInt;
-                    c++;
-                }
-            }
-        }
-        if(c == 0){
-            throw invalid_argument("THERE IS NO SUCH NUMBER!");
-        }
-        return X;
-    }
-
-    CircularInt operator/= (CircularInt& X, int const& num){
-        CircularInt temp {X.start, X.end};
-        int c = 0;
-        for(int i = X.start; i <= X.end; i++){
-            temp.currentInt = i;
-            if(c > 0) break;
-            else{
-                if((temp*num) == X){
-                    X.currentInt = temp.currentInt;
-                    c++;
-                }
-            }
-        }
-        if(c == 0){
-            throw invalid_argument("THERE IS NO SUCH NUMBER!");
-        }
-        return X;
-
-    }
-
-    CircularInt operator%= (CircularInt& X, CircularInt const& Y){
-        X.currentInt %= Y.currentInt;
-        return range(X);
-    }
-
-
-    CircularInt operator%= (CircularInt& X, int const& num){
-        X.currentInt %= num;
-        return range(X);
-    }
-
-    CircularInt operator^= (CircularInt& X, CircularInt const& Y){
-        X.currentInt ^= Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator^= (CircularInt& X, int const& num){
-        X.currentInt ^= num;
-        return range(X);
-    }
-
-    CircularInt operator|= (CircularInt& X, CircularInt const& Y){
-        X.currentInt |= Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator|= (CircularInt& X, int const& num){
-        X.currentInt |= num;
-        return range(X);
-    }
-
-
-    CircularInt operator&= (CircularInt& X, CircularInt const& Y){
-        X.currentInt &= Y.currentInt;
-        return range(X);
-    }
-
-    CircularInt operator&= (CircularInt& X, int const& num){
-        X.currentInt &= num;
-        return range(X);
-    }
-
-// prefix increment operator
-CircularInt& CircularInt::operator++() {
-    currentInt ++;
+// ++
+CircularInt& CircularInt :: operator++(){
+   currentInt=currentInt+1;
+    inRange(currentInt);
     return *this;
 }
 
-// postfix increment operator
-CircularInt& CircularInt::operator++(int) {
-    CircularInt temp(*this);
-    ++*this;
-    return temp;
+CircularInt CircularInt :: operator++(int){
+    CircularInt ans(*this);
+    ++(*this);
+    return ans;
 }
 
+// --
 CircularInt& CircularInt :: operator--(){
-    if(currentInt-1 >= start)
-        currentInt -= 1;
-    else currentInt = end;
+    currentInt=currentInt-1;
+    inRange(currentInt);
     return *this;
 }
 
@@ -433,10 +82,469 @@ CircularInt CircularInt :: operator--(int){
     return ans;
 }
 
-int CircularInt:: operator-() {
-    int ans=this->currentInt*(-1);
-    while (ans<0){
-        ans+=this->end;
+// <
+bool operator< (CircularInt const& x, CircularInt const& y){
+    return  x.currentInt < y.currentInt;
+}
+
+bool operator< (CircularInt const& x, int const& num){
+    return x.currentInt<num;
+}
+bool operator< (int const& num, CircularInt const& x){
+    return num<x.currentInt;
+}
+
+// >
+bool operator> (CircularInt const& x, CircularInt const& y){
+    return  x.currentInt > y.currentInt;
+}
+
+bool operator> (CircularInt const& x, int const& num){
+    return x.currentInt>num;
+}
+bool operator> (int const& num, CircularInt const& x){
+    return num>x.currentInt;
+}
+
+// ==
+bool operator== (CircularInt const& x, CircularInt const& y){
+    return ((x.currentInt==y.currentInt)&&(x.start==y.start)&&(x.end==y.end));
+}
+bool operator== (CircularInt const& x, int const& num){
+    return x.currentInt==num;
+}
+bool operator== (int const& num, CircularInt const& x){
+    return num==x.currentInt;
+}
+
+// !=
+bool operator!= (CircularInt const& x, CircularInt const& y){
+    return ((x.currentInt!=y.currentInt)||(x.start!=y.start)||(x.end!=y.end));
+}
+bool operator!= (CircularInt const& x, int const& num){
+    return x.currentInt!=num;
+}
+bool operator!= (int const& num, CircularInt const& x){
+    return num!=x.currentInt;
+}
+
+// <=
+bool operator<= (CircularInt const& x, CircularInt const& y){
+    return (x.currentInt<=y.currentInt);
+}
+bool operator<= (CircularInt const& x, int const& num){
+    return x.currentInt<=num;
+}
+bool operator<= (int const& num, CircularInt const& x){
+    return num<=x.currentInt;
+}
+
+// >=
+bool operator>= (CircularInt const& x, CircularInt const& y){
+    return (x.currentInt>=y.currentInt);
+}
+bool operator>= (CircularInt const& x, int const& num){
+    return x.currentInt>=num;
+}
+bool operator>= (int const& num, CircularInt const& x){
+    return num>=x.currentInt;
+}
+
+// +
+CircularInt operator+ (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt += y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator+ (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt += num;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator+ (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt += num;
+    inRange(temp);
+    return temp;
+}
+
+// -
+CircularInt operator- (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt -= y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator- (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt -= num;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator- (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt -= num;
+    inRange(temp);
+    return temp;
+}
+
+// *
+CircularInt operator* (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt *= y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator* (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt *= num;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator* (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt *= num;
+    inRange(temp);
+    return temp;
+}
+
+// %
+CircularInt operator% (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt % y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator% (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = num % temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator% (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = num % temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+// ^
+CircularInt operator^ (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt ^ y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator^ (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = num ^ temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator^ (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = num ^ temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+// |
+CircularInt operator| (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt | y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator| (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = num | temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator| (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = num | temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+// &
+CircularInt operator& (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt & y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator& (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = num & temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator& (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = num & temp.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+// <<
+CircularInt operator<< (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt << y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator<< (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt << num;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator<< (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt << num;
+    inRange(temp);
+    return temp;
+}
+
+// >>
+CircularInt operator>> (CircularInt x, CircularInt const& y){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt >> y.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator>> (CircularInt x, int const& num){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt >> num;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator>> (int const& num, CircularInt x){
+    CircularInt temp (x);
+    temp.currentInt = temp.currentInt >> num;
+    inRange(temp);
+    return temp;
+}
+
+//+=
+CircularInt operator+= (CircularInt& x, CircularInt const& y){
+    x.currentInt += y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator+= (CircularInt& x, int const& num){
+    x.currentInt += num;
+    inRange(x);
+    return x;
+}
+
+//-=
+CircularInt operator-= (CircularInt& x, CircularInt const& y){
+    x.currentInt -= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator-= (CircularInt& x, int const& num){
+    x.currentInt -= num;
+    inRange(x);
+    return x;
+}
+
+//*=
+CircularInt operator*= (CircularInt& x, CircularInt const& y){
+    x.currentInt *= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator*= (CircularInt& x, int const& num){
+    x.currentInt *= num;
+    inRange(x);
+    return x;
+}
+
+//%=
+CircularInt operator%= (CircularInt& x, CircularInt const& y){
+    x.currentInt %= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator%= (CircularInt& x, int const& num){
+    x.currentInt %= num;
+    inRange(x);
+    return x;
+}
+
+//^=
+CircularInt operator^= (CircularInt& x, CircularInt const& y){
+    x.currentInt ^= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator^= (CircularInt& x, int const& num){
+    x.currentInt ^= num;
+    inRange(x);
+    return x;
+}
+
+//|=
+CircularInt operator|= (CircularInt& x, CircularInt const& y){
+    x.currentInt |= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator|= (CircularInt& x, int const& num){
+    x.currentInt |= num;
+    inRange(x);
+    return x;
+}
+
+//&=
+CircularInt operator&= (CircularInt& x, CircularInt const& y){
+    x.currentInt &= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator&= (CircularInt& x, int const& num){
+    x.currentInt &= num;
+    inRange(x);
+    return x;
+}
+
+//<<=
+CircularInt operator<<= (CircularInt& x, CircularInt const& y){
+    x.currentInt <<= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator<<= (CircularInt& x, int const& num){
+    x.currentInt <<= num;
+    inRange(x);
+    return x;
+}
+
+//>>=
+CircularInt operator>>= (CircularInt& x, CircularInt const& y){
+    x.currentInt >>= y.currentInt;
+    inRange(x);
+    return x;
+}
+
+CircularInt operator>>= (CircularInt& x, int const& num){
+    x.currentInt >>= num;
+    inRange(x);
+    return x;
+}
+
+
+CircularInt operator~ (CircularInt const& x){
+    CircularInt temp (const_cast<CircularInt &>(x));
+    temp.currentInt = ~x.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+CircularInt operator- (CircularInt const x){
+    CircularInt temp (const_cast<CircularInt &>(x));
+    temp.currentInt = (-1)*x.currentInt;
+    inRange(temp);
+    return temp;
+}
+
+// /
+CircularInt operator/ (CircularInt x, CircularInt const& y) {
+    CircularInt temp(x);
+    if(x.currentInt%y.currentInt==0){
+        temp.currentInt=x.currentInt/y.currentInt;
+        inRange(temp);
+    } else
+        throw invalid_argument("There is no number in the range who can make it");
+    return temp;
+}
+
+CircularInt operator/ (CircularInt x, int const& num) {
+    CircularInt temp(x);
+    if(x.currentInt%num==0){
+        temp.currentInt=x.currentInt/num;
+        inRange(temp);
+    } else
+        throw invalid_argument("There is no number in the range who can make it");
+    return temp;
+}
+
+CircularInt operator/ (int const& num,CircularInt x) {
+    CircularInt temp(x);
+    if(x.currentInt%num==0){
+        temp.currentInt=x.currentInt/num;
+        inRange(temp);
+    } else
+        throw invalid_argument("There is no number in the range who can make it");
+    return temp;
+}
+
+// /=
+CircularInt operator/= (CircularInt& cir1, CircularInt const& cir2) {
+    CircularInt temp{cir1.start, cir1.end};
+    int c = 0;
+    for (int i = cir1.start; i <= cir1.end; i++) {
+        temp.currentInt = i;
+        if (c > 0) break;
+        else {
+            if ((temp * cir2) == cir1) {
+                cir1.currentInt = temp.currentInt;
+                c++;
+            }
+        }
     }
-    return ans%this->end;
+    if (c == 0) {
+        throw invalid_argument("There is no number in the range who can make it");
+    }
+    return cir1;
+}
+CircularInt operator/= (CircularInt& cir, int const& num) {
+    CircularInt temp{cir.start, cir.end};
+    int c = 0;
+    for (int i = cir.start; i <= cir.end; i++) {
+        temp.currentInt = i;
+        if (c > 0) break;
+        else {
+            if ((temp * num) == cir) {
+                cir.currentInt = temp.currentInt;
+                c++;
+            }
+        }
+    }
+    if (c == 0) {
+        throw invalid_argument("There is no number in the range who can make it");
+    }
+    return cir;
 }
