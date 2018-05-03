@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/task5.dir/main.cpp.o CMakeFiles/task5.dir/Board.cpp.o CMakeFiles/task5.dir/Element.cpp.o CMakeFiles/task5.dir/Index.cpp.o CMakeFiles/task5.dir/indexExecption.cpp.o CMakeFiles/task5.dir/inputExecption.cpp.o CMakeFiles/task5.dir/IllegalCoordinateException.cpp.o CMakeFiles/task5.dir/IllegalCharException.cpp.o  -o task5 
