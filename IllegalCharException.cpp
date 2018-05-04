@@ -1,19 +1,11 @@
-//
-// Created by yarin665 on 03/05/18.
-//
-
 #include "IllegalCharException.h"
 
-IllegalCharException::IllegalCharException()
-{
+
+char IllegalCharException::theChar() const{
+    return ch;
 }
 
-
-IllegalCharException::~IllegalCharException()
-{
-}
-
-const char* IllegalCharException::what() const throw()
-{
-    return "index exception happened";
+//Function for setting value in ch.
+void IllegalCharException::setCh(const char& c){
+    this->ch=c;
 }

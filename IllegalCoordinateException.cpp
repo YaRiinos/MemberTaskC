@@ -1,16 +1,25 @@
+//
+// Created by yarin665 on 04/05/18.
+//
+
 #include "IllegalCoordinateException.h"
-/* Constructor */
 
-IllegalCoordinateException::IllegalCoordinateException()
-{
+//Constructor for IllegalCoordinateException class.
+IllegalCoordinateException::IllegalCoordinateException(const Index& index){
+    this->index=index;
 }
 
-
-IllegalCoordinateException::~IllegalCoordinateException()
-{
+//Function for exception throwing - returns the string printed in the exception throwing.
+string IllegalCoordinateException::theCoordinate() const{
+    if(numEx!=0){
+        string ans=to_string(numEx);
+        return ans;
+    } else{
+        string ans=to_string(index.getRow())+","+to_string(index.getCol());
+        return ans;
+    }
 }
 
-const char* IllegalCoordinateException::what() const throw()
-{
-    return "index exception happened";
+IllegalCoordinateException::IllegalCoordinateException(const int x) {
+    this->numEx=x;
 }

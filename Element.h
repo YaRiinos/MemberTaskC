@@ -1,9 +1,9 @@
+//
+// Created by yarin665 on 04/05/18.
+//
 
-#ifndef TASK5_ELEMENT_H
-#define TASK5_ELEMENT_H
-
-
-#pragma once
+#ifndef TICTACTOE_ELEMENT_H
+#define TICTACTOE_ELEMENT_H
 
 #include <iostream>
 #include "Index.h"
@@ -22,11 +22,14 @@ public:
 
     friend ostream& operator<<(ostream& os, const Element& obj);
 
-   // void operator=(const Element& newVal);
+    // void operator=(const Element& newVal);
     void operator= (char newVal);
 
-    operator char() const { return val; }
+     operator char() const { return val; }
+
+    void setVal(char val);
 };
 
 
-#endif //TASK5_ELEMENT_H
+
+#endif //TICTACTOE_ELEMENT_H

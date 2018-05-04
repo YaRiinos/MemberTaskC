@@ -1,6 +1,9 @@
-#ifndef TASK5_INDEX_H
-#define TASK5_INDEX_H
+//
+// Created by yarin665 on 04/05/18.
+//
 
+#ifndef TICTACTOE_INDEX_H
+#define TICTACTOE_INDEX_H
 
 class Index
 {
@@ -19,4 +22,5 @@ public:
 };
 
 
-#endif //TASK5_INDEX_H
+
+#endif //TICTACTOE_INDEX_H

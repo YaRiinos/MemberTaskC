@@ -9,15 +9,16 @@ Element::Element()
 
 Element::Element(char newVal)
 {
-    if (newVal!='X' && newVal!='O'&& newVal!='.'){
-        //throw IllegalCharException(newVal);
+    if (newVal =='X' || newVal == 'O'){
+        val = newVal;
     } else{
-        val=newVal;
+        IllegalCharException ce;
+        ce.setCh(newVal);
+        throw ce;
     }
 }
 
-Element::~Element()
-= default;
+Element::~Element(){}
 
 ostream& operator<<(ostream& os, const Element& obj)
 {
@@ -28,11 +29,24 @@ ostream& operator<<(ostream& os, const Element& obj)
 
 
 
+
 void Element::operator= (char newVal){
-    if(val != 'X' && val != 'O'){
-        throw IllegalCharException(newVal);
+    if (newVal =='X' || newVal == 'O'){
+        val = newVal;
+    } else{
+        IllegalCharException ce;
+        ce.setCh(newVal);
+        throw ce;
     }
-    val = newVal;
+
 }
 
-
+void Element::setVal(char newVal) {
+    if (newVal =='X' || newVal == 'O'){
+        Element::val = newVal;
+    } else{
+        IllegalCharException ce;
+        ce.setCh(newVal);
+        throw ce;
+    }
+}

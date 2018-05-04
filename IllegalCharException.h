@@ -1,18 +1,22 @@
 //
-// Created by yarin665 on 03/05/18.
+// Created by yarin665 on 04/05/18.
 //
 
-#ifndef TASK5_ILLEGALCHAREXCEPTION_H
-#define TASK5_ILLEGALCHAREXCEPTION_H
+#ifndef TICTACTOE_ILLEGALCHAREXCEPTION_H
+#define TICTACTOE_ILLEGALCHAREXCEPTION_H
 
-#include <stdexcept>
-class IllegalCharException : public std::exception
-{
+#include <exception>
+using namespace std;
+
+//Class to handle illegal char insertions. Using function 'setCh' by the Board Class '=' operator function.
+class IllegalCharException:public exception{
+private:
+    char ch;
 public:
-    IllegalCharException();
-    IllegalCharException(char inVal);
-    virtual const char* what() const throw();
-    virtual ~IllegalCharException();
-};
+    //Function for exception throwing, returns the value in ch.
+    char theChar() const;
 
-#endif //TASK5_ILLEGALCHAREXCEPTION_H
+    //Function for setting value in ch.
+    void setCh(const char& c);
+};
+#endif //TICTACTOE_ILLEGALCHAREXCEPTION_H

@@ -1,22 +1,26 @@
 //
-// Created by yarin665 on 03/05/18.
+// Created by yarin665 on 04/05/18.
 //
 
-#ifndef TASK5_ILLEGALCOORDINATEEXCEPTION_H
-#define TASK5_ILLEGALCOORDINATEEXCEPTION_H
-
-
+#ifndef TICTACTOE_ILLEGALCOORDINATEEXCEPTION_H
+#define TICTACTOE_ILLEGALCOORDINATEEXCEPTION_H
 #include <exception>
+#include <string>
 #include "Index.h"
-#include <sstream>
-#include <stdexcept>
-class IllegalCoordinateException : public std::exception
-{
+using namespace std;
+
+
+class IllegalCoordinateException:public exception{
+private:
+    Index index;
+    int numEx=0;
 public:
-    IllegalCoordinateException();
-    IllegalCoordinateException(int x, int y);
-    virtual const char* what() const throw();
-    virtual ~IllegalCoordinateException();
+    //Constructor for IllegalCoordinateException class.
+    IllegalCoordinateException(const Index& index);
+    IllegalCoordinateException(const int x);
+
+    //Function for exception throwing - returns the string printed in the exception throwing.
+    string theCoordinate() const;
 };
 
-#endif //TASK5_ILLEGALCOORDINATEEXCEPTION_H
+#endif //TICTACTOE_ILLEGALCOORDINATEEXCEPTION_H

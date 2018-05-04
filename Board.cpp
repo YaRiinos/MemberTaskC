@@ -38,7 +38,8 @@ ostream& operator<<(ostream& os, const Board& obj)
 Board& Board::operator=(const Board& obj)
 {
     if(obj.size!=size){
-
+        IllegalCoordinateException ce{obj.size};
+        throw ce;
     }
 
     else{
@@ -49,14 +50,31 @@ Board& Board::operator=(const Board& obj)
 
         }
     }
+
+    return *this;
 }
+
+Board& Board::operator=(char newVal)
+{
+    if(newVal == '.')
+    {
+       *this=Board{size};
+    }else{
+        IllegalCharException ce;
+        ce.setCh(newVal);
+        throw ce;
+    }
+
+    return *this;
+}
+
 
 Element& Board::operator [](Index index)
 {
     if(index.getRow() < 0 || index.getCol() < 0 ||
-            index.getRow() >= size || index.getCol() >= size){
-        throw IllegalCoordinateException(index);
+       index.getRow() >= size || index.getCol() >= size){
+        IllegalCoordinateException ce{index};
+        throw ce;
     }
     return board[index.getRow()][index.getCol()];
 }
-
